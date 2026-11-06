@@ -1,7 +1,6 @@
 secrets/
 *.txt
 
-srcs/.env
 
 docker-compose.override.yml
 
