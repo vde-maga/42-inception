@@ -31,6 +31,23 @@ services:
       - mariadb
     restart: unless-stopped
 
+  # ⬇️ NOVO SERVIÇO
+  nginx:
+    build: ./requirements/nginx
+    image: nginx:inception
+    container_name: nginx
+    env_file:
+      - .env
+    volumes:
+      - wp_data:/var/www/html:ro
+    ports:
+      - "443:443" # ÚNICA porta exposta ao exterior!
+    networks:
+      - inception
+    depends_on:
+      - wordpress
+    restart: unless-stopped
+
 volumes:
   db_data:
   wp_data:
@@ -38,6 +55,7 @@ volumes:
 networks:
   inception:
     name: inception
+    driver: bridge
 
 secrets:
   db_password:

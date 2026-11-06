@@ -1,0 +1,16 @@
+FROM alpine:3.23
+
+RUN apk update && apk upgrade && \
+    apk add --no-cache nginx openssl
+
+RUN mkdir -p /run/nginx /etc/nginx/ssl
+
+RUN rm -f /etc/nginx/http.d/default.conf
+COPY conf/nginx.conf /etc/nginx/http.d/default.conf
+
+COPY tools/init.sh /usr/local/bin/init.sh
+RUN chmod +x /usr/local/bin/init.sh
+
+EXPOSE 443
+
+ENTRYPOINT ["/usr/local/bin/init.sh"]
