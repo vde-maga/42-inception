@@ -18,7 +18,13 @@ RUN apk update && apk upgrade && \
     php83-fileinfo \
     php83-dom \
     php83-session \
-    php83-zip
+    php83-zip \
+    php83-ctype \
+    php83-iconv \
+    php83-simplexml \
+    php83-exif \
+    php83-opcache \
+    php83-pecl-redis
 
 RUN ln -s /usr/bin/php83 /usr/bin/php
 
