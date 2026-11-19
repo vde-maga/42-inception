@@ -1,7 +1,7 @@
 services:
   mariadb:
     build: ./requirements/mariadb
-    image: 'mariadb:inception'
+    image: "mariadb:inception"
     container_name: mariadb
     env_file:
       - .env
@@ -9,13 +9,13 @@ services:
       - db_password
       - db_root_password
     volumes:
-      - 'db_data:/var/lib/mysql'
+      - "db_data:/var/lib/mysql"
     networks:
       - inception
     restart: unless-stopped
   wordpress:
     build: ./requirements/wordpress
-    image: 'wordpress:inception'
+    image: "wordpress:inception"
     container_name: wordpress
     env_file:
       - .env
@@ -24,7 +24,7 @@ services:
       - credentials
       - redis_password
     volumes:
-      - 'wp_data:/var/www/html'
+      - "wp_data:/var/www/html"
     networks:
       - inception
     depends_on:
@@ -33,14 +33,14 @@ services:
     restart: unless-stopped
   nginx:
     build: ./requirements/nginx
-    image: 'nginx:inception'
+    image: "nginx:inception"
     container_name: nginx
     env_file:
       - .env
     volumes:
-      - 'wp_data:/var/www/html:ro'
+      - "wp_data:/var/www/html:ro"
     ports:
-      - '443:443'
+      - "443:443"
     networks:
       - inception
     depends_on:
@@ -48,12 +48,30 @@ services:
     restart: unless-stopped
   redis:
     build: ./requirements/bonus/redis
-    image: 'redis:inception'
+    image: "redis:inception"
     container_name: redis
     secrets:
       - redis_password
     networks:
       - inception
+    restart: unless-stopped
+  ftp:
+    build: ./requirements/bonus/ftp
+    image: ftp:inception
+    container_name: ftp
+    env_file:
+      - .env
+    secrets:
+      - ftp_password
+    volumes:
+      - wp_data:/var/www/html
+    ports:
+      - "21:21"
+      - "30000-30009:30000-30009"
+    networks:
+      - inception
+    depends_on:
+      - wordpress
     restart: unless-stopped
 volumes:
   db_data: null
@@ -71,3 +89,5 @@ secrets:
     file: ../secrets/credentials.txt
   redis_password:
     file: ../secrets/redis_password.txt
+  ftp_password:
+    file: ../secrets/ftp_password.txt
