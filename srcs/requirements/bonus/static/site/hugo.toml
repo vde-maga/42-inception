@@ -1,0 +1,10 @@
+baseURL = "/"
+languageCode = "en-us"
+title = "vde-maga — Inception"
+theme = "inception"
+
+disableKinds = ["taxonomy", "term", "RSS", "sitemap", "robotsTXT"]
+enableGitInfo = false
+
+[markup.goldmark.renderer]
+  unsafe = true

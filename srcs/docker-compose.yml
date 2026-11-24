@@ -33,18 +33,22 @@ services:
     restart: unless-stopped
   nginx:
     build: ./requirements/nginx
-    image: "nginx:inception"
+    image: nginx:inception
     container_name: nginx
     env_file:
       - .env
     volumes:
-      - "wp_data:/var/www/html:ro"
+      - wp_data:/var/www/html:ro
     ports:
       - "443:443"
+      - "8443:8443"
+      - "8444:8444"
     networks:
       - inception
     depends_on:
       - wordpress
+      - adminer
+      - static
     restart: unless-stopped
   redis:
     build: ./requirements/bonus/redis
@@ -72,6 +76,25 @@ services:
       - inception
     depends_on:
       - wordpress
+    restart: unless-stopped
+  adminer:
+    build: ./requirements/bonus/adminer
+    image: adminer:inception
+    container_name: adminer
+    networks:
+      - inception
+    depends_on:
+      - mariadb
+    restart: unless-stopped
+  static:
+    build:
+      context: ./requirements/bonus/static
+      args:
+        SITE_BASEURL: "https://${DOMAIN_NAME}:8444/"
+    image: static:inception
+    container_name: static
+    networks:
+      - inception
     restart: unless-stopped
 volumes:
   db_data: null

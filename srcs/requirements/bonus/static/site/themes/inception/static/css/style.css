@@ -1,0 +1,17 @@
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body {
+  margin: 0 auto; padding: 2rem 1.25rem; max-width: 46rem;
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.65; background: #14161a; color: #e6e6e6;
+}
+header { border-bottom: 1px solid #2c3038; padding-bottom: 1rem; margin-bottom: 2rem; }
+header h1 { font-size: 1.4rem; margin: 0 0 .5rem; }
+header h1 a { color: #e6e6e6; text-decoration: none; }
+nav a { color: #6cb6ff; margin-right: 1rem; text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+main a { color: #6cb6ff; }
+h2 { font-size: 1.2rem; }
+code { background: #1e222a; padding: .15rem .35rem; border-radius: 3px; }
+footer { border-top: 1px solid #2c3038; margin-top: 3rem; padding-top: 1rem;
+         font-size: .85rem; color: #8b93a1; }
